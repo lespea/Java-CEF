@@ -24,6 +24,8 @@ package com.lespea.cef.utils;
 
 //~--- non-JDK imports --------------------------------------------------------
 
+import com.lespea.cef.InvalidField;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -40,10 +42,21 @@ import org.junit.Test;
 public class EscapeFieldTests {
 
     /**
+     * A carriage return character should throw an exception
+     * @throws InvalidField if we have a bad field
+     */
+    @Test(expected = InvalidField.class)
+    public void testCarriageReturnEscape() throws InvalidField {
+        StringUtils.escapeField( "Hi\rBye" );
+    }
+
+
+    /**
      * Escape the backslash character ("\")
+     * @throws InvalidField if we have a bad field
      */
     @Test
-    public void testEscapeBackslash() {
+    public void testEscapeBackslash() throws InvalidField {
         final String[]   onePipe    = new String[] { "Hi Mr. Backslash \\", "Hi Mr. Backslash \\\\" };
         final String[]   twoPipes1  = new String[] { "Hi Mr. \\ Backslash \\", "Hi Mr. \\\\ Backslash \\\\" };
         final String[]   twoPipes2  = new String[] { "Hi Mr. Backslash \\\\", "Hi Mr. Backslash \\\\\\\\" };
@@ -59,9 +72,10 @@ public class EscapeFieldTests {
 
     /**
      * Escape the pipe character ("|")
+     * @throws InvalidField if we have a bad field
      */
     @Test
-    public void testEscapePipe() {
+    public void testEscapePipe() throws InvalidField {
         final String[]   oneSlash   = new String[] { "Hi Mr. Pipe |", "Hi Mr. Pipe \\|" };
         final String[]   twoSlash1  = new String[] { "Hi Mr. | Pipe |", "Hi Mr. \\| Pipe \\|" };
         final String[]   twoSlash2  = new String[] { "Hi Mr. Pipe ||", "Hi Mr. Pipe \\|\\|" };
@@ -76,10 +90,21 @@ public class EscapeFieldTests {
 
 
     /**
+     * A newline character should throw an exception
+     * @throws InvalidField if we have a bad field
+     */
+    @Test(expected = InvalidField.class)
+    public void testNewlineEscape() throws InvalidField {
+        StringUtils.escapeField( "Hi\nBye" );
+    }
+
+
+    /**
      * Strings that should be the same coming out as going in
+     * @throws InvalidField if we have a bad field
      */
     @Test
-    public void testNoEscapes() {
+    public void testNoEscapes() throws InvalidField {
         final String   blankString   = "";
         final String   normalString  = "This is a string";
         final String   unicodeString = "Hi there, let's try out some unicode shall we? «á℅£¢®©»";
@@ -95,9 +120,10 @@ public class EscapeFieldTests {
 
     /**
      * Null strings should return null
+     * @throws InvalidField if we have a bad field
      */
     @Test
-    public void testNullEscapes() {
+    public void testNullEscapes() throws InvalidField {
         Assert.assertNull( StringUtils.escapeField( null ) );
     }
 }
