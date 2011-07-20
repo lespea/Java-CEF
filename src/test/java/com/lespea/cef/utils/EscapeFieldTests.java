@@ -40,15 +40,33 @@ import org.junit.Test;
 public class EscapeFieldTests {
 
     /**
+     * Escape the backslash character ("\")
+     */
+    @Test
+    public void testEscapeBackslash() {
+        final String[]   onePipe    = new String[] { "Hi Mr. Backslash \\", "Hi Mr. Backslash \\\\" };
+        final String[]   twoPipes1  = new String[] { "Hi Mr. \\ Backslash \\", "Hi Mr. \\\\ Backslash \\\\" };
+        final String[]   twoPipes2  = new String[] { "Hi Mr. Backslash \\\\", "Hi Mr. Backslash \\\\\\\\" };
+        final String[][] strsToTest = new String[][] {
+            onePipe, twoPipes1, twoPipes2
+        };
+
+        for (String[] strToTest : strsToTest) {
+            Assert.assertEquals( strToTest[1], StringUtils.escapeField( strToTest[0] ) );
+        }
+    }
+
+
+    /**
      * Escape the pipe character ("|")
      */
     @Test
     public void testEscapePipe() {
-        final String[]   onePipe    = new String[] { "Hi Mr. Pipe |", "Hi Mr. Pipe \\|" };
-        final String[]   twoPipes1  = new String[] { "Hi Mr. | Pipe |", "Hi Mr. \\| Pipe \\|" };
-        final String[]   twoPipes2  = new String[] { "Hi Mr. Pipe ||", "Hi Mr. Pipe \\|\\|" };
+        final String[]   oneSlash   = new String[] { "Hi Mr. Pipe |", "Hi Mr. Pipe \\|" };
+        final String[]   twoSlash1  = new String[] { "Hi Mr. | Pipe |", "Hi Mr. \\| Pipe \\|" };
+        final String[]   twoSlash2  = new String[] { "Hi Mr. Pipe ||", "Hi Mr. Pipe \\|\\|" };
         final String[][] strsToTest = new String[][] {
-            onePipe, twoPipes1, twoPipes2
+            oneSlash, twoSlash1, twoSlash2
         };
 
         for (String[] strToTest : strsToTest) {

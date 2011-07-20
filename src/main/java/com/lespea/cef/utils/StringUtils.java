@@ -52,7 +52,7 @@ public class StringUtils {
      * Pattern used to escape any of the characters that require escaping in the
      * field part of a CEF string
      */
-    private static final Pattern escapeFieldPattern = Pattern.compile( "([|])" );
+    private static final Pattern escapeFieldPattern = Pattern.compile( "([|\\\\])" );
 
 
     //~--- methods ------------------------------------------------------------
