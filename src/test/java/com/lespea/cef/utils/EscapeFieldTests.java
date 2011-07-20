@@ -40,6 +40,24 @@ import org.junit.Test;
 public class EscapeFieldTests {
 
     /**
+     * Escape the pipe character ("|")
+     */
+    @Test
+    public void testEscapePipe() {
+        final String[]   onePipe    = new String[] { "Hi Mr. Pipe |", "Hi Mr. Pipe \\|" };
+        final String[]   twoPipes1  = new String[] { "Hi Mr. | Pipe |", "Hi Mr. \\| Pipe \\|" };
+        final String[]   twoPipes2  = new String[] { "Hi Mr. Pipe ||", "Hi Mr. Pipe \\|\\|" };
+        final String[][] strsToTest = new String[][] {
+            onePipe, twoPipes1, twoPipes2
+        };
+
+        for (String[] strToTest : strsToTest) {
+            Assert.assertEquals( strToTest[1], StringUtils.escapeField( strToTest[0] ) );
+        }
+    }
+
+
+    /**
      * Strings that should be the same coming out as going in
      */
     @Test
@@ -54,6 +72,8 @@ public class EscapeFieldTests {
         }
     }
 
+
+    // TODO: Should nulls throw an exception VS returning null?
 
     /**
      * Null strings should return null
