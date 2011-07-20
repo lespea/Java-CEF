@@ -71,6 +71,25 @@ public class EscapeFieldTests {
 
 
     /**
+     * Escape the pipe and backslash characters
+     * @throws InvalidField if we have a bad field
+     */
+    @Test
+    public void testEscapeMixed() throws InvalidField {
+        final String[]   oneEach    = new String[] { "Hi Mr. Pipe \\|", "Hi Mr. Pipe \\\\\\|" };
+        final String[]   twoEach1   = new String[] { "Hi Mr. \\| Pipe \\|\\", "Hi Mr. \\\\\\| Pipe \\\\\\|\\\\" };
+        final String[]   twoEach2   = new String[] { "Hi Mr. Pipe ||\\\\", "Hi Mr. Pipe \\|\\|\\\\\\\\" };
+        final String[][] strsToTest = new String[][] {
+            oneEach, twoEach1, twoEach2
+        };
+
+        for (String[] strToTest : strsToTest) {
+            Assert.assertEquals( strToTest[1], StringUtils.escapeField( strToTest[0] ) );
+        }
+    }
+
+
+    /**
      * Escape the pipe character ("|")
      * @throws InvalidField if we have a bad field
      */
