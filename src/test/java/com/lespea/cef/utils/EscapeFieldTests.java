@@ -53,4 +53,13 @@ public class EscapeFieldTests {
             Assert.assertEquals( strToTest, StringUtils.escapeField( strToTest ) );
         }
     }
+
+
+    /**
+     * Null strings should return null
+     */
+    @Test
+    public void testNullEscapes() {
+        Assert.assertNull( StringUtils.escapeField( null ) );
+    }
 }

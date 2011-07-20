@@ -44,6 +44,11 @@ public class StringUtils {
      * @return the escaped version of the field string
      */
     public static final String escapeField( final String fieldStr ) {
+        if (fieldStr == null) {
+            return null;
+        }
+
+
         return fieldStr;
     }
 }
