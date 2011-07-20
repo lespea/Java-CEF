@@ -57,6 +57,8 @@ public class StringUtils {
 
     //~--- methods ------------------------------------------------------------
 
+    // TODO: Investigate using String.getBytes(“UTF-8″) to coerce the string into UTF-8 (not-super important atm)
+
     /**
      * Every field in a CEF string (minus the extension) must escape the bar
      * <code>("|")</code> character as well as the backslash <code>("\")</code>
