@@ -22,6 +22,13 @@
 
 package com.lespea.cef.utils;
 
+//~--- JDK imports ------------------------------------------------------------
+
+import java.util.regex.Pattern;
+
+
+//~--- classes ----------------------------------------------------------------
+
 /**
  * Utility functions that manipulate strings to work correctly with the CEF
  * format
@@ -30,6 +37,15 @@ package com.lespea.cef.utils;
  * @author Adam Lesperance
  */
 public class StringUtils {
+
+    /**
+     * Pattern used to escape any of the characters that require escaping in the
+     * field part of a CEF string
+     */
+    private static final Pattern escapeFieldPattern = Pattern.compile( "([|])" );
+
+
+    //~--- methods ------------------------------------------------------------
 
     /**
      * Every field in a CEF string (minus the extension) must escape the bar
@@ -49,6 +65,8 @@ public class StringUtils {
         }
 
 
-        return fieldStr;
+        final String escapedStr = escapeFieldPattern.matcher( fieldStr ).replaceAll( "\\\\$1" );
+
+        return escapedStr;
     }
 }
