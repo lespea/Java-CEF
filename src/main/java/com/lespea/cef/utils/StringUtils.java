@@ -44,6 +44,6 @@ public class StringUtils {
      * @return the escaped version of the field string
      */
     public static final String escapeField( final String fieldStr ) {
-        return "";
+        return fieldStr;
     }
 }
