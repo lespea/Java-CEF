@@ -22,6 +22,11 @@
 
 package com.lespea.cef.utils;
 
+//~--- non-JDK imports --------------------------------------------------------
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 //~--- JDK imports ------------------------------------------------------------
 
 import java.util.regex.Pattern;
@@ -37,6 +42,11 @@ import java.util.regex.Pattern;
  * @author Adam Lesperance
  */
 public class StringUtils {
+
+    /**
+     * Logger object
+     */
+    private static final Logger Log = LoggerFactory.getLogger( StringUtils.class );
 
     /**
      * Pattern used to escape any of the characters that require escaping in the
@@ -61,11 +71,15 @@ public class StringUtils {
      */
     public static final String escapeField( final String fieldStr ) {
         if (fieldStr == null) {
+            Log.warn( "Tried to escape a null CEF field" );
+
             return null;
         }
 
 
         final String escapedStr = escapeFieldPattern.matcher( fieldStr ).replaceAll( "\\\\$1" );
+
+        Log.debug( "The CEF field \"{}\" was escaped to \"{}\"", fieldStr, escapedStr );
 
         return escapedStr;
     }
