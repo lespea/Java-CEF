@@ -81,22 +81,22 @@ public class StringUtils {
      */
     public static final String escapeField( final String fieldStr ) throws InvalidField {
         if (fieldStr == null) {
-            Log.warn( "Tried to escape a null CEF field" );
+            StringUtils.Log.warn( "Tried to escape a null CEF field" );
 
             return null;
         }
 
 
-        if (invalidFieldPattern.matcher( fieldStr ).matches()) {
-            Log.error( "The field string contained an invalid character" );
+        if (StringUtils.invalidFieldPattern.matcher( fieldStr ).matches()) {
+            StringUtils.Log.error( "The field string contained an invalid character" );
 
             throw new InvalidField( "The field string " + fieldStr + " contained an invalid character" );
         }
 
 
-        final String escapedStr = escapeFieldPattern.matcher( fieldStr ).replaceAll( "\\\\$1" );
+        final String escapedStr = StringUtils.escapeFieldPattern.matcher( fieldStr ).replaceAll( "\\\\$1" );
 
-        Log.debug( "The CEF field \"{}\" was escaped to \"{}\"", fieldStr, escapedStr );
+        StringUtils.Log.debug( "The CEF field \"{}\" was escaped to \"{}\"", fieldStr, escapedStr );
 
         return escapedStr;
     }

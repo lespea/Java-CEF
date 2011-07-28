@@ -43,7 +43,9 @@ public class EscapeFieldTest {
 
     /**
      * A carriage return character should throw an exception
-     * @throws InvalidField if we have a bad field
+     *
+     * @throws InvalidField
+     *             if we have a bad field
      */
     @Test(expected = InvalidField.class)
     public void testCarriageReturnEscape() throws InvalidField {
@@ -53,7 +55,9 @@ public class EscapeFieldTest {
 
     /**
      * Escape the backslash character ("\")
-     * @throws InvalidField if we have a bad field
+     *
+     * @throws InvalidField
+     *             if we have a bad field
      */
     @Test
     public void testEscapeBackslash() throws InvalidField {
@@ -64,7 +68,7 @@ public class EscapeFieldTest {
             onePipe, twoPipes1, twoPipes2
         };
 
-        for (String[] strToTest : strsToTest) {
+        for (final String[] strToTest : strsToTest) {
             Assert.assertEquals( strToTest[1], StringUtils.escapeField( strToTest[0] ) );
         }
     }
@@ -72,7 +76,9 @@ public class EscapeFieldTest {
 
     /**
      * Escape the pipe and backslash characters
-     * @throws InvalidField if we have a bad field
+     *
+     * @throws InvalidField
+     *             if we have a bad field
      */
     @Test
     public void testEscapeMixed() throws InvalidField {
@@ -83,7 +89,7 @@ public class EscapeFieldTest {
             oneEach, twoEach1, twoEach2
         };
 
-        for (String[] strToTest : strsToTest) {
+        for (final String[] strToTest : strsToTest) {
             Assert.assertEquals( strToTest[1], StringUtils.escapeField( strToTest[0] ) );
         }
     }
@@ -91,7 +97,9 @@ public class EscapeFieldTest {
 
     /**
      * Escape the pipe character ("|")
-     * @throws InvalidField if we have a bad field
+     *
+     * @throws InvalidField
+     *             if we have a bad field
      */
     @Test
     public void testEscapePipe() throws InvalidField {
@@ -102,7 +110,7 @@ public class EscapeFieldTest {
             oneSlash, twoSlash1, twoSlash2
         };
 
-        for (String[] strToTest : strsToTest) {
+        for (final String[] strToTest : strsToTest) {
             Assert.assertEquals( strToTest[1], StringUtils.escapeField( strToTest[0] ) );
         }
     }
@@ -110,7 +118,9 @@ public class EscapeFieldTest {
 
     /**
      * A newline character should throw an exception
-     * @throws InvalidField if we have a bad field
+     *
+     * @throws InvalidField
+     *             if we have a bad field
      */
     @Test(expected = InvalidField.class)
     public void testNewlineEscape() throws InvalidField {
@@ -120,7 +130,9 @@ public class EscapeFieldTest {
 
     /**
      * Strings that should be the same coming out as going in
-     * @throws InvalidField if we have a bad field
+     *
+     * @throws InvalidField
+     *             if we have a bad field
      */
     @Test
     public void testNoEscapes() throws InvalidField {
@@ -129,7 +141,7 @@ public class EscapeFieldTest {
         final String   unicodeString = "Hi there, let's try out some unicode shall we? «á℅£¢®©»";
         final String[] strsToTest    = new String[] { blankString, normalString, unicodeString };
 
-        for (String strToTest : strsToTest) {
+        for (final String strToTest : strsToTest) {
             Assert.assertEquals( strToTest, StringUtils.escapeField( strToTest ) );
         }
     }
@@ -139,7 +151,9 @@ public class EscapeFieldTest {
 
     /**
      * Null strings should return null
-     * @throws InvalidField if we have a bad field
+     *
+     * @throws InvalidField
+     *             if we have a bad field
      */
     @Test
     public void testNullEscapes() throws InvalidField {

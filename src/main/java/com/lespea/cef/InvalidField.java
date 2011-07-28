@@ -47,26 +47,30 @@ public final class InvalidField extends Exception {
 
 
     /**
-     * @param message the message to be thrown
+     * @param message
+     *            the message to be thrown
      */
-    public InvalidField( String message ) {
+    public InvalidField( final String message ) {
         super( message );
     }
 
 
     /**
-     * @param cause the exception that caused the issue
+     * @param cause
+     *            the exception that caused the issue
      */
-    public InvalidField( Throwable cause ) {
+    public InvalidField( final Throwable cause ) {
         super( cause );
     }
 
 
     /**
-     * @param message the message to be thrown
-     * @param cause the exception that caused the issue
+     * @param message
+     *            the message to be thrown
+     * @param cause
+     *            the exception that caused the issue
      */
-    public InvalidField( String message, Throwable cause ) {
+    public InvalidField( final String message, final Throwable cause ) {
         super( message, cause );
     }
 }
