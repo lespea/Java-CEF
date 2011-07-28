@@ -1,5 +1,5 @@
 /**
- * EscapeFieldTest.java    2011-07-19
+ * EscapeFieldTestOld.java    2011-07-19
  *
  * Copyright 2011, Adam Lesperance
  *
@@ -39,7 +39,7 @@ import org.junit.Test;
  * @author Adam Lesperance
  *
  */
-public class EscapeFieldTest {
+public class EscapeFieldTestOld {
 
     /**
      * A carriage return character should throw an exception
