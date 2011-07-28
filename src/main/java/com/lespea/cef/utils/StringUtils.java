@@ -52,7 +52,7 @@ public final class StringUtils {
     /**
      * Pattern used to determine if a field has any invalid characters
      */
-    private static final Pattern INVALID_FIELD_PATTERN = Pattern.compile( ".*[\r\n].*" );
+    private static final Pattern INVALID_FIELD_PATTERN = Pattern.compile( "[\r\n]" );
 
     /**
      * Pattern used to escape any of the characters that require escaping in the field part of a CEF
@@ -95,7 +95,7 @@ public final class StringUtils {
         }
 
 
-        if (StringUtils.INVALID_FIELD_PATTERN.matcher( fieldStr ).matches()) {
+        if (StringUtils.INVALID_FIELD_PATTERN.matcher( fieldStr ).find()) {
             StringUtils.LOG.error( "The field string contained an invalid character" );
 
             throw new InvalidField( "The field string " + fieldStr + " contained an invalid character" );
