@@ -42,23 +42,23 @@ import java.util.regex.Pattern;
  * @version 1.0, 2011-07-19
  * @author Adam Lesperance
  */
-final public class StringUtils {
+public final class StringUtils {
 
     /**
      * Logger object
      */
-    private static final Logger Log = LoggerFactory.getLogger( StringUtils.class );
+    private static final Logger LOG = LoggerFactory.getLogger( StringUtils.class );
+
+    /**
+     * Pattern used to determine if a field has any invalid characters
+     */
+    private static final Pattern INVALID_FIELD_PATTERN = Pattern.compile( ".*[\r\n].*" );
 
     /**
      * Pattern used to escape any of the characters that require escaping in the field part of a CEF
      * string
      */
-    private static final Pattern escapeFieldPattern = Pattern.compile( "([|\\\\])" );
-
-    /**
-     * Pattern used to determine if a field has any invalid characters
-     */
-    private static final Pattern invalidFieldPattern = Pattern.compile( ".*[\r\n].*" );
+    private static final Pattern ESCAPE_FIELD_PATTERN = Pattern.compile( "([|\\\\])" );
 
 
     //~--- constructors -------------------------------------------------------
@@ -89,22 +89,22 @@ final public class StringUtils {
      */
     public static String escapeField( final String fieldStr ) throws InvalidField {
         if (fieldStr == null) {
-            StringUtils.Log.warn( "Tried to escape a null CEF field" );
+            StringUtils.LOG.warn( "Tried to escape a null CEF field" );
 
             return null;
         }
 
 
-        if (StringUtils.invalidFieldPattern.matcher( fieldStr ).matches()) {
-            StringUtils.Log.error( "The field string contained an invalid character" );
+        if (StringUtils.INVALID_FIELD_PATTERN.matcher( fieldStr ).matches()) {
+            StringUtils.LOG.error( "The field string contained an invalid character" );
 
             throw new InvalidField( "The field string " + fieldStr + " contained an invalid character" );
         }
 
 
-        final String escapedStr = StringUtils.escapeFieldPattern.matcher( fieldStr ).replaceAll( "\\\\$1" );
+        final String escapedStr = StringUtils.ESCAPE_FIELD_PATTERN.matcher( fieldStr ).replaceAll( "\\\\$1" );
 
-        StringUtils.Log.debug( "The CEF field \"{}\" was escaped to \"{}\"", fieldStr, escapedStr );
+        StringUtils.LOG.debug( "The CEF field \"{}\" was escaped to \"{}\"", fieldStr, escapedStr );
 
         return escapedStr;
     }
