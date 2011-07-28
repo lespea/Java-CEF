@@ -42,7 +42,7 @@ import java.util.regex.Pattern;
  * @version 1.0, 2011-07-19
  * @author Adam Lesperance
  */
-public class StringUtils {
+final public class StringUtils {
 
     /**
      * Logger object
@@ -59,6 +59,14 @@ public class StringUtils {
      * Pattern used to determine if a field has any invalid characters
      */
     private static final Pattern invalidFieldPattern = Pattern.compile( ".*[\r\n].*" );
+
+
+    //~--- constructors -------------------------------------------------------
+
+    /**
+     * Null constructor for utility class
+     */
+    private StringUtils() {}
 
 
     //~--- methods ------------------------------------------------------------
@@ -79,7 +87,7 @@ public class StringUtils {
      * @throws InvalidField
      *             if the string to be escaped is invalid according to the CEF spec
      */
-    public static final String escapeField( final String fieldStr ) throws InvalidField {
+    public static String escapeField( final String fieldStr ) throws InvalidField {
         if (fieldStr == null) {
             StringUtils.Log.warn( "Tried to escape a null CEF field" );
 
