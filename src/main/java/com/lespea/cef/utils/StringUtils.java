@@ -108,4 +108,39 @@ public final class StringUtils {
 
         return escapedStr;
     }
+
+
+    //~--- get methods --------------------------------------------------------
+
+    /**
+     * Tests if the provided string is a valid field string.
+     * <p>
+     * A field is not valid if it contains a vertical newline character
+     *
+     * @param fieldStr
+     *            the field string to test
+     * @return if the field string contains a vertical newline character
+     */
+    public static Boolean isValidField( final String fieldStr ) {
+        final Boolean isValid;
+
+        if (fieldStr == null) {
+            StringUtils.LOG.warn( "Tried to detect if a null string was a valid field string" );
+
+            isValid = false;
+        }
+        else if (StringUtils.INVALID_FIELD_PATTERN.matcher( fieldStr ).find()) {
+            isValid = false;
+        }
+        else {
+            isValid = true;
+        }
+
+
+        StringUtils.LOG.debug( "The field string \"{}\" is {}valid", fieldStr, isValid
+                ? ""
+                : "not " );
+
+        return isValid;
+    }
 }
