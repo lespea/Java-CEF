@@ -75,6 +75,34 @@ public class EscapeFieldTest {
 
 
     /**
+     * List of strings that contain backslashes and pipes and how they should look after being
+     * escaped.
+     *
+     * @return the grouping of strings to process
+     */
+    @DataProvider
+    public Object[][] slashPipeFields() {
+        return TestHelpers.genEscapeStrings( "\\||\\||\\", "\\\\\\|\\|\\\\\\|\\|\\\\" );
+    }
+
+
+    /**
+     * Makes sure that normal characters are not escaped in a field.
+     *
+     * @param unquotedStr
+     *            the string to quote
+     * @param quotedStr
+     *            what the string should be transformed to by the function
+     * @throws InvalidField
+     *             if the field contains an invalid character
+     */
+    @Test(dataProvider = "normalFields")
+    public void testFieldNormal( final String unquotedStr, final String quotedStr ) throws InvalidField {
+        Assert.assertEquals( quotedStr, StringUtils.escapeField( unquotedStr ) );
+    }
+
+
+    /**
      * Makes sure the pipe character is properly escaped in a field.
      *
      * @param unquotedStr
@@ -91,22 +119,6 @@ public class EscapeFieldTest {
 
 
     /**
-     * Makes sure that normal characters are not escaped in a field.
-     *
-     * @param unquotedStr
-     *            the string to quote
-     * @param quotedStr
-     *            what the string should be transformed to by the function
-     * @throws InvalidField
-     *             if the field contains an invalid character
-     */
-    @Test(dataProvider = "normalFields")
-    public void testNormalPipes( final String unquotedStr, final String quotedStr ) throws InvalidField {
-        Assert.assertEquals( quotedStr, StringUtils.escapeField( unquotedStr ) );
-    }
-
-
-    /**
      * Makes sure that backslash characters are not escaped in a field.
      *
      * @param unquotedStr
@@ -117,7 +129,23 @@ public class EscapeFieldTest {
      *             if the field contains an invalid character
      */
     @Test(dataProvider = "slashFields")
-    public void testSlashPipes( final String unquotedStr, final String quotedStr ) throws InvalidField {
+    public void testFieldSlash( final String unquotedStr, final String quotedStr ) throws InvalidField {
+        Assert.assertEquals( quotedStr, StringUtils.escapeField( unquotedStr ) );
+    }
+
+
+    /**
+     * Makes sure the pipes and slash character is properly escaped in a field.
+     *
+     * @param unquotedStr
+     *            the string to quote
+     * @param quotedStr
+     *            what the string should be transformed to by the function
+     * @throws InvalidField
+     *             if the field contains an invalid character
+     */
+    @Test(dataProvider = "slashPipeFields")
+    public void testFieldSlashPipes( final String unquotedStr, final String quotedStr ) throws InvalidField {
         Assert.assertEquals( quotedStr, StringUtils.escapeField( unquotedStr ) );
     }
 }
