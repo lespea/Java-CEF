@@ -57,8 +57,8 @@ public final class TestHelpers {
             str2Escape + str2Escape + "Contains many bad strings" + str2Escape + str2Escape,
             escapedStr + escapedStr + "Contains many bad strings" + escapedStr + escapedStr };
         generatedStrs[4] = new Object[] {
-            "Let's do unicde " + TestHelpers.UNICODE_STRING + str2Escape + " ending string",
-            "Let's do unicde " + TestHelpers.UNICODE_STRING + escapedStr + " ending string" };
+            "Let's do unicode " + TestHelpers.UNICODE_STRING + str2Escape + " ending string",
+            "Let's do unicode " + TestHelpers.UNICODE_STRING + escapedStr + " ending string" };
 
         return generatedStrs;
     }
