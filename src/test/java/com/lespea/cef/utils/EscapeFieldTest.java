@@ -213,6 +213,19 @@ public class EscapeFieldTest {
 
 
     /**
+     * Verify that a null field is processed correctly
+     *
+     * @throws InvalidField
+     *             if the field contains an invalid character
+     */
+    @Test
+    public void testNullField() throws InvalidField {
+        Assert.assertNull( StringUtils.escapeField( null ) );
+        Assert.assertFalse( StringUtils.isValidField( null ) );
+    }
+
+
+    /**
      * Verify that a valid field is marked as such
      */
     @Test
