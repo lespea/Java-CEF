@@ -112,7 +112,16 @@ public class ExtensionTest {
 
 
     /**
-     * Verify that a valid field is marked as such
+     * Verify that a null extension key is processed correctly
+     */
+    @Test
+    public void testNullExtensionValue() {
+        Assert.assertFalse( StringUtils.isValidExtensionValue( null ) );
+    }
+
+
+    /**
+     * Verify that a valid extension key is marked as such
      *
      * @param okKey
      *            string that should be a valid extension key
@@ -122,5 +131,22 @@ public class ExtensionTest {
     @Test(dataProvider = "normalKeyStrins")
     public void testValidExtensionKey( final String okKey, final String ignoreString ) {
         Assert.assertTrue( StringUtils.isValidExtensionKey( okKey ) );
+    }
+
+
+    /**
+     * Verify that a valid extension key is marked as such
+     */
+    @Test
+    public void testValidExtensionValue() {
+        final int          maxChar = 16 * 16 * 16 * 16;
+        final StringBuffer okVal   = new StringBuffer( maxChar + 1 );
+
+        for (int i = 0; i <= maxChar; i++) {
+            okVal.append( (char) i );
+        }
+
+
+        Assert.assertTrue( StringUtils.isValidExtensionValue( okVal.toString() ) );
     }
 }

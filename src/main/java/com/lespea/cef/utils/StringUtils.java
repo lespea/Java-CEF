@@ -155,6 +155,27 @@ public final class StringUtils {
 
 
     /**
+     * Tests if the provided string is a valid extension value string
+     * <p>
+     * Essentially everything is valid except for nulls
+     *
+     * @param extensionValueStr
+     *            the extension value to test
+     * @return if the extension value string is null or not
+     */
+    public static Boolean isValidExtensionValue( final String extensionValueStr ) {
+        if (extensionValueStr == null) {
+            StringUtils.LOG.warn( "Tried to detect if a null string was a valid extension value string" );
+
+            return false;
+        }
+
+
+        return true;
+    }
+
+
+    /**
      * Tests if the provided string is a valid field string.
      * <p>
      * A field is not valid if it contains a vertical newline character
