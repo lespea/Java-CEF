@@ -42,6 +42,17 @@ import org.testng.annotations.Test;
 public class EscapeFieldTest {
 
     /**
+     * List of strings that shouldn't be escaped at all.
+     *
+     * @return the grouping of strings to process
+     */
+    @DataProvider
+    public Object[][] normalFields() {
+        return TestHelpers.genEscapeStrings( "blah blah blah", "blah blah blah" );
+    }
+
+
+    /**
      * List of strings that contain pipes and how they should look after being escaped.
      *
      * @return the grouping of strings to process
@@ -64,6 +75,22 @@ public class EscapeFieldTest {
      */
     @Test(dataProvider = "pipeFields")
     public void testFieldPipes( final String unquotedStr, final String quotedStr ) throws InvalidField {
+        Assert.assertEquals( quotedStr, StringUtils.escapeField( unquotedStr ) );
+    }
+
+
+    /**
+     * Makes sure that normal characters are not escaped in a field.
+     *
+     * @param unquotedStr
+     *            the string to quote
+     * @param quotedStr
+     *            what the string should be transformed to by the function
+     * @throws InvalidField
+     *             if the field contains an invalid character
+     */
+    @Test(dataProvider = "normalFields")
+    public void testNormalPipes( final String unquotedStr, final String quotedStr ) throws InvalidField {
         Assert.assertEquals( quotedStr, StringUtils.escapeField( unquotedStr ) );
     }
 }
