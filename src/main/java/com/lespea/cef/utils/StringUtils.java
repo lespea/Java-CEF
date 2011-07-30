@@ -74,7 +74,7 @@ public final class StringUtils {
      * Pattern used to escape any of the characters that require escaping in the extension value
      * part of a CEF string
      */
-    private static final Pattern ESCAPE_EXTENSION_VALUE_PATTERN = Pattern.compile( "([\\\\\r\n])" );
+    private static final Pattern ESCAPE_EXTENSION_VALUE_PATTERN = Pattern.compile( "[\\\\\r\n]" );
 
 
     //~--- constructors -------------------------------------------------------
@@ -89,8 +89,8 @@ public final class StringUtils {
 
     /**
      * Every field in a CEF string (minus the extension) must escape the backslash
-     * <code>("\")</code> character and translate any newline (<code>("\r" OR "\n"</code>)
-     * characters into their respective string representative.
+     * <code>("\")</code> character and translate any newline (<code>"\r" OR "\n"</code>) characters
+     * into their respective string representative.
      * <p>
      * Null strings return null for now.
      *
@@ -110,20 +110,24 @@ public final class StringUtils {
         final StringBuffer escapedStrBuf = new StringBuffer( valueStr.length() );
 
         while (matcher.find()) {
-            final char letter = matcher.group( 1 ).charAt( 0 );
+            final char letter = matcher.group( 0 ).charAt( 0 );
             String     replacement;
 
             switch (letter) {
             case '\r' :
-                replacement = "\\r";
+                replacement = "\\\\r";
                 break;
 
             case '\n' :
-                replacement = "\\n";
+                replacement = "\\\\n";
+                break;
+
+            case '\\' :
+                replacement = "\\\\\\\\";
                 break;
 
             default :
-                replacement = "\\" + letter;
+                replacement = "\\\\" + letter;
             }
 
 
