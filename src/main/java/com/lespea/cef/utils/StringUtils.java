@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 //~--- JDK imports ------------------------------------------------------------
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
@@ -69,6 +70,12 @@ public final class StringUtils {
      */
     private static final Pattern ESCAPE_FIELD_PATTERN = Pattern.compile( "([|\\\\])" );
 
+    /**
+     * Pattern used to escape any of the characters that require escaping in the extension value
+     * part of a CEF string
+     */
+    private static final Pattern ESCAPE_EXTENSION_VALUE_PATTERN = Pattern.compile( "([\\\\\r\n])" );
+
 
     //~--- constructors -------------------------------------------------------
 
@@ -80,15 +87,71 @@ public final class StringUtils {
 
     //~--- methods ------------------------------------------------------------
 
+    /**
+     * Every field in a CEF string (minus the extension) must escape the backslash
+     * <code>("\")</code> character and translate any newline (<code>("\r" OR "\n"</code>)
+     * characters into their respective string representative.
+     * <p>
+     * Null strings return null for now.
+     *
+     * @param valueStr
+     *            the text of the extension value that requires escaping
+     * @return the escaped version of the extension value string
+     */
+    public static String escapeExtensionValue( final String valueStr ) {
+        if (valueStr == null) {
+            StringUtils.LOG.warn( "Tried to escape a null CEF extension value" );
+
+            return null;
+        }
+
+
+        final Matcher      matcher       = StringUtils.ESCAPE_EXTENSION_VALUE_PATTERN.matcher( valueStr );
+        final StringBuffer escapedStrBuf = new StringBuffer( valueStr.length() );
+
+        while (matcher.find()) {
+            final char letter = matcher.group( 1 ).charAt( 0 );
+            String     replacement;
+
+            switch (letter) {
+            case '\r' :
+                replacement = "\\r";
+                break;
+
+            case '\n' :
+                replacement = "\\n";
+                break;
+
+            default :
+                replacement = "\\" + letter;
+            }
+
+
+            matcher.appendReplacement( escapedStrBuf, replacement );
+        }
+
+
+        matcher.appendTail( escapedStrBuf );
+
+        final String escapedStr = escapedStrBuf.toString();
+
+        StringUtils.LOG.debug( "The CEF field \"{}\" was escaped to \"{}\"", valueStr, escapedStr );
+
+        return escapedStr;
+    }
+
+
     // TODO: Investigate using String.getBytes(“UTF-8″) to coerce the string
-    // into UTF-8 (not-super important atm)
+    // into UTF-8 (not-super important atm since I probably don't even have to do this)
 
     /**
      * Every field in a CEF string (minus the extension) must escape the bar <code>("|")</code>
-     * character as well as the backslash <code>("\")</code>
+     * character as well as the backslash <code>("\")</code>.
      * <p>
      * Additionally, the field string may not contain a vertical newline character and, if one is
      * found, then an IllegalArgument exception is thrown!
+     * <p>
+     * Null strings return null for now.
      *
      * @param fieldStr
      *            the text of the field that requires escaping
