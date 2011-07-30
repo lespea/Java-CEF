@@ -171,6 +171,8 @@ public final class StringUtils {
         }
 
 
+        StringUtils.LOG.debug( "The extension key string \"{}\" is valid", extensionValueStr );
+
         return true;
     }
 
