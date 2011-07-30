@@ -197,11 +197,12 @@ public class FieldTest {
      */
     @Test(
         dataProvider    = "slashPipeFields",
-        threadPoolSize  = 50,
+        threadPoolSize  = 100,
         invocationCount = 50
     )
     public void testFieldSlashPipesThreads( final String unquotedStr, final String quotedStr ) throws InvalidField {
         Assert.assertEquals( quotedStr, StringUtils.escapeField( unquotedStr ) );
+        Assert.assertTrue( StringUtils.isValidField( unquotedStr ) );
     }
 
 
