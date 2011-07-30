@@ -51,8 +51,17 @@ public final class StringUtils {
 
     /**
      * Pattern used to determine if a field has any invalid characters
+     * <p>
+     * <code>/[\r\n]/</code>
      */
     private static final Pattern INVALID_FIELD_PATTERN = Pattern.compile( "[\r\n]" );
+
+    /**
+     * Pattern used to determine if a field has any invalid characters
+     * <p>
+     * <code>/\s/</code>
+     */
+    private static final Pattern INVALID_EXTENSION_KEY_PATTERN = Pattern.compile( "\\s" );
 
     /**
      * Pattern used to escape any of the characters that require escaping in the field part of a CEF
@@ -111,6 +120,39 @@ public final class StringUtils {
 
 
     //~--- get methods --------------------------------------------------------
+
+    /**
+     * Tests if the provided string is a valid extension key string.
+     * <p>
+     * A field is not valid if it contains a whitespace character
+     *
+     * @param extensionKeyStr
+     *            the extension key string to test
+     * @return if the extension key string contains a whitespace character
+     */
+    public static Boolean isValidExtensionKey( final String extensionKeyStr ) {
+        final Boolean isValid;
+
+        if (extensionKeyStr == null) {
+            StringUtils.LOG.warn( "Tried to detect if a null string was a valid extension key string" );
+
+            isValid = false;
+        }
+        else if (StringUtils.INVALID_EXTENSION_KEY_PATTERN.matcher( extensionKeyStr ).find()) {
+            isValid = false;
+        }
+        else {
+            isValid = true;
+        }
+
+
+        StringUtils.LOG.debug( "The extension key string \"{}\" is {}valid", extensionKeyStr, isValid
+                ? ""
+                : "not " );
+
+        return isValid;
+    }
+
 
     /**
      * Tests if the provided string is a valid field string.
