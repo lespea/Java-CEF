@@ -148,4 +148,24 @@ public class EscapeFieldTest {
     public void testFieldSlashPipes( final String unquotedStr, final String quotedStr ) throws InvalidField {
         Assert.assertEquals( quotedStr, StringUtils.escapeField( unquotedStr ) );
     }
+
+
+    /**
+     * Makes sure the escape method is thread safe.
+     *
+     * @param unquotedStr
+     *            the string to quote
+     * @param quotedStr
+     *            what the string should be transformed to by the function
+     * @throws InvalidField
+     *             if the field contains an invalid character
+     */
+    @Test(
+        dataProvider    = "slashPipeFields",
+        threadPoolSize  = 100,
+        invocationCount = 50
+    )
+    public void testFieldSlashPipesThreads( final String unquotedStr, final String quotedStr ) throws InvalidField {
+        Assert.assertEquals( quotedStr, StringUtils.escapeField( unquotedStr ) );
+    }
 }
