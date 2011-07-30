@@ -30,7 +30,7 @@ package com.lespea.cef.utils.tests;
 public final class TestHelpers {
 
     /** Field description */
-    private static final String UNICODE_STRING = "«á℅£¢®©»";
+    public static final String UNICODE_STRING = "«á℅£¢®©»";
 
 
     //~--- methods ------------------------------------------------------------

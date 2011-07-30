@@ -62,7 +62,9 @@ public class FieldTest {
      */
     @DataProvider
     public Object[][] normalFields() {
-        return TestHelpers.genEscapeStrings( "blah blah blah", "blah blah blah" );
+        return TestHelpers.genEscapeStrings( TestHelpers.UNICODE_STRING + "blah blah blah"
+                + TestHelpers.UNICODE_STRING, TestHelpers.UNICODE_STRING + "blah blah blah"
+                    + TestHelpers.UNICODE_STRING );
     }
 
 
