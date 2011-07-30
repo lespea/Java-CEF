@@ -42,6 +42,19 @@ import org.testng.annotations.Test;
 public class EscapeFieldTest {
 
     /**
+     * List of strings that should throw an InvalidField exception
+     *
+     * @return array of bad strings to process
+     */
+    @DataProvider
+    public Object[][] badFields() {
+        return new Object[][] {
+            { "blah blah \r", "" }, { "blah blah \n", "" }
+        };
+    }
+
+
+    /**
      * List of strings that shouldn't be escaped at all.
      *
      * @return the grouping of strings to process
@@ -83,6 +96,25 @@ public class EscapeFieldTest {
     @DataProvider
     public Object[][] slashPipeFields() {
         return TestHelpers.genEscapeStrings( "\\||\\||\\", "\\\\\\|\\|\\\\\\|\\|\\\\" );
+    }
+
+
+    /**
+     * Verify a bad field throws an exception if it's attempted to be escaped
+     *
+     * @param unquotedStr
+     *            the string to quote
+     * @param quotedStr
+     *            what the string should be transformed to by the function
+     * @throws InvalidField
+     *             if the field contains an invalid character
+     */
+    @Test(
+        dataProvider       = "badFields",
+        expectedExceptions = InvalidField.class
+    )
+    public void testBadEscapeField( final String unquotedStr, final String quotedStr ) throws InvalidField {
+        StringUtils.escapeField( unquotedStr );
     }
 
 
