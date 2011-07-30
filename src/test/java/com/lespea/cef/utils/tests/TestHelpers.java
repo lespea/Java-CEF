@@ -20,7 +20,7 @@
 
 
 
-package com.lespea.cef.utils;
+package com.lespea.cef.utils.tests;
 
 /**
  * Helper functions to assist with testing

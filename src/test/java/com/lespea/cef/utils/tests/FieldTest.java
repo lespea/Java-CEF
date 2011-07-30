@@ -1,5 +1,5 @@
 /**
- * EscapeFieldTest.java    2011-07-29
+ * FieldTest.java    2011-07-29
  *
  * Copyright 2011, Adam Lesperance
  *
@@ -20,11 +20,12 @@
 
 
 
-package com.lespea.cef.utils;
+package com.lespea.cef.utils.tests;
 
 //~--- non-JDK imports --------------------------------------------------------
 
 import com.lespea.cef.InvalidField;
+import com.lespea.cef.utils.StringUtils;
 
 import junit.framework.Assert;
 
@@ -39,7 +40,7 @@ import org.testng.annotations.Test;
  *
  * @author Adam Lesperance
  */
-public class EscapeFieldTest {
+public class FieldTest {
 
     /**
      * List of strings that should throw an InvalidField exception
