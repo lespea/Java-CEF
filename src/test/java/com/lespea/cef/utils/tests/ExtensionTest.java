@@ -57,16 +57,60 @@ public class ExtensionTest {
 
 
     /**
+     * List of strings that contain carriage returns and how they should look after being escaped.
+     *
+     * @return the grouping of strings to process
+     */
+    @DataProvider
+    public Object[][] carriageValues() {
+        return TestHelpers.genEscapeStrings( "\r", "\\r" );
+    }
+
+
+    /**
+     * List of strings that contain carriage returns and how they should look after being escaped.
+     *
+     * @return the grouping of strings to process
+     */
+    @DataProvider
+    public Object[][] mixedValues() {
+        return TestHelpers.genEscapeStrings( "\r\n\n\\\\\r", "\\r\\n\\n\\\\\\\\\\r" );
+    }
+
+
+    /**
+     * List of strings that contain newlines and how they should look after being escaped.
+     *
+     * @return the grouping of strings to process
+     */
+    @DataProvider
+    public Object[][] newlineValues() {
+        return TestHelpers.genEscapeStrings( "\n", "\\n" );
+    }
+
+
+    /**
      * List of strings that shouldn't be escaped at all.
      *
      * @return the grouping of strings to process
      */
     @DataProvider
-    public Object[][] normalKeyStrins() {
+    public Object[][] normalKeyStrings() {
         return new Object[][] {
             { TestHelpers.UNICODE_STRING + "blahblahblah" + TestHelpers.UNICODE_STRING,
               TestHelpers.UNICODE_STRING + "blahblahblah" + TestHelpers.UNICODE_STRING }
         };
+    }
+
+
+    /**
+     * List of strings that contain backslashes and how they should look after being escaped.
+     *
+     * @return the grouping of strings to process
+     */
+    @DataProvider
+    public Object[][] slashValues() {
+        return TestHelpers.genEscapeStrings( "\\", "\\\\" );
     }
 
 
@@ -85,7 +129,7 @@ public class ExtensionTest {
 
 
     /**
-     * Makes sure the escape method is thread safe.
+     * Makes sure the key test method is thread safe.
      *
      * @param okKey
      *            string that should be a valid extension key
@@ -93,7 +137,7 @@ public class ExtensionTest {
      *            *not used
      */
     @Test(
-        dataProvider    = "normalKeyStrins",
+        dataProvider    = "normalKeyStrings",
         threadPoolSize  = 100,
         invocationCount = 50
     )
@@ -117,6 +161,7 @@ public class ExtensionTest {
     @Test
     public void testNullExtensionValue() {
         Assert.assertFalse( StringUtils.isValidExtensionValue( null ) );
+        Assert.assertNull( StringUtils.escapeExtensionValue( null ) );
     }
 
 
@@ -128,7 +173,7 @@ public class ExtensionTest {
      * @param ignoreString
      *            *not used
      */
-    @Test(dataProvider = "normalKeyStrins")
+    @Test(dataProvider = "normalKeyStrings")
     public void testValidExtensionKey( final String okKey, final String ignoreString ) {
         Assert.assertTrue( StringUtils.isValidExtensionKey( okKey ) );
     }
@@ -148,5 +193,80 @@ public class ExtensionTest {
 
 
         Assert.assertTrue( StringUtils.isValidExtensionValue( okVal.toString() ) );
+    }
+
+
+    /**
+     * Makes sure the carriage return character is properly escaped in an extension value.
+     *
+     * @param unquotedStr
+     *            the string to quote
+     * @param quotedStr
+     *            what the string should be transformed to by the function
+     */
+    @Test(dataProvider = "carriageValues")
+    public void testValueCarriage( final String unquotedStr, final String quotedStr ) {
+        Assert.assertEquals( quotedStr, StringUtils.escapeExtensionValue( unquotedStr ) );
+    }
+
+
+    /**
+     * Makes sure that mixed characters are properly escaped in an extension value.
+     *
+     * @param unquotedStr
+     *            the string to quote
+     * @param quotedStr
+     *            what the string should be transformed to by the function
+     */
+    @Test(dataProvider = "mixedValues")
+    public void testValueMixed( final String unquotedStr, final String quotedStr ) {
+        Assert.assertEquals( quotedStr, StringUtils.escapeExtensionValue( unquotedStr ) );
+    }
+
+
+    /**
+     * Makes sure the newline character is properly escaped in an extension value.
+     *
+     * @param unquotedStr
+     *            the string to quote
+     * @param quotedStr
+     *            what the string should be transformed to by the function
+     */
+    @Test(dataProvider = "newlineValues")
+    public void testValueNewlines( final String unquotedStr, final String quotedStr ) {
+        Assert.assertEquals( quotedStr, StringUtils.escapeExtensionValue( unquotedStr ) );
+    }
+
+
+    /**
+     * Makes sure the backslash character is properly escaped in an extension value.
+     *
+     * @param unquotedStr
+     *            the string to quote
+     * @param quotedStr
+     *            what the string should be transformed to by the function
+     */
+    @Test(dataProvider = "slashValues")
+    public void testValueSlashes( final String unquotedStr, final String quotedStr ) {
+        Assert.assertEquals( quotedStr, StringUtils.escapeExtensionValue( unquotedStr ) );
+    }
+
+
+    /**
+     * Makes sure the extension value methods are thread safe.
+     *
+     * @param quotedStr
+     *            string that should be a valid extension value
+     * @param unquotedStr
+     *            what the string should be escaped to
+     */
+    @Test(
+        dataProvider    = "mixedValues",
+        threadPoolSize  = 100,
+        invocationCount = 50
+    )
+    public void testValueThreads( final String unquotedStr, final String quotedStr ) {
+        Assert.assertTrue( StringUtils.isValidExtensionValue( unquotedStr ) );
+        Assert.assertEquals( quotedStr, StringUtils.escapeExtensionValue( unquotedStr ) );
     }
 }
