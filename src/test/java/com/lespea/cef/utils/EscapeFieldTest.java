@@ -162,10 +162,29 @@ public class EscapeFieldTest {
      */
     @Test(
         dataProvider    = "slashPipeFields",
-        threadPoolSize  = 100,
+        threadPoolSize  = 50,
         invocationCount = 50
     )
     public void testFieldSlashPipesThreads( final String unquotedStr, final String quotedStr ) throws InvalidField {
         Assert.assertEquals( quotedStr, StringUtils.escapeField( unquotedStr ) );
+    }
+
+
+    /**
+     * Verify that an invalid field is marked as such
+     */
+    @Test
+    public void testInvalidField() {
+        Assert.assertFalse( StringUtils.isValidField( "Normal st\nring with a bunch of stuff \\||\\|\\|\t\t\t\t" ) );
+        Assert.assertFalse( StringUtils.isValidField( "Normal st\rring with a bunch of stuff \\||\\|\\|\t\t\t\t" ) );
+    }
+
+
+    /**
+     * Verify that a valid field is marked as such
+     */
+    @Test
+    public void testValidField() {
+        Assert.assertTrue( StringUtils.isValidField( "Normal string with a bunch of stuff \\||\\|\\|\t\t\t\t" ) );
     }
 }
