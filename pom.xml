@@ -53,15 +53,19 @@
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-changelog-plugin</artifactId>
-					<version>2.2</version>
+					<artifactId>maven-scm-plugin</artifactId>
+					<version>1.5</version>
+					<configuration>
+						<connectionType>connection</connectionType>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
 	<scm>
-		<connection>scm:git:git@github.com:lespea/Java-CEF.git</connection>
+		<connection>scm:git:git://github.com/lespea/Java-CEF.git</connection>
 		<url>https://github.com/lespea/Java-CEF</url>
+		<developerConnection>scm:git:git://github.com/lespea/Java-CEF.git</developerConnection>
 	</scm>
 	<url>https://github.com/lespea/Java-CEF</url>
 </project>
