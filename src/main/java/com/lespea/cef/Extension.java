@@ -119,9 +119,7 @@ public class Extension implements Serializable {
         else if (this.getClass() != obj.getClass()) {
             return false;
         }
-
-
-        if (!fields.equals( ((Extension) obj).getFields() )) {
+        else if (!fields.equals( ((Extension) obj).getFields() )) {
             return false;
         }
 
