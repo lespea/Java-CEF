@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
 //~--- classes ----------------------------------------------------------------
 
 /**
- * Class description
+ * Make sure the CEF extension fields are properly escaped under all circumstances.
  *
  *
  * @version 1.0, 2011-07-30
