@@ -50,6 +50,21 @@ public class CEF implements Serializable {
      */
     public static final int DEFAULT_CEF_VERSION = 0;
 
+    /**
+     * Guess as to how big the string will be
+     */
+    private static final int FIELD_SIZE_GUESS = 50;
+
+    /**
+     * The maximum value that a severity can be
+     */
+    public static final int MAX_SEVERITY = 10;
+
+    /**
+     * The minimum value that a severity can be
+     */
+    public static final int MIN_SEVERITY = 0;
+
     /** Field description */
     private static final long serialVersionUID = 1L;
 
@@ -235,9 +250,10 @@ public class CEF implements Serializable {
         assert id != null : "The id cannot be null";
         assert name != null : "The name cannot be null";
         assert extension != null : "The extension cannot be null";
-        assert ((severity >= 0) && (severity <= 10)) : "The severity must be between 0 and 10";
+        assert ((severity >= CEF.MIN_SEVERITY) && (severity <= CEF.MAX_SEVERITY)) :
+               "The severity must be between 0 and 10";
 
-        final StringBuilder sb = new StringBuilder( 50 + extension.toString().length() );
+        final StringBuilder sb = new StringBuilder( CEF.FIELD_SIZE_GUESS + extension.toString().length() );
 
         sb.append( "CEF:" );
         sb.append( cefVersion );
