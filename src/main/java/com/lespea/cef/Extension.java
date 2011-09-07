@@ -80,19 +80,21 @@ public class Extension implements Serializable {
      *             if one of the provided keys is invalid
      */
     Extension( final Map<String, String> extensionFields ) throws InvalidExtensionKey {
-        final StringBuilder sb = new StringBuilder();
+        final StringBuilder sb    = new StringBuilder();
+        Boolean             first = true;
 
         for (final Entry<String, String> entry : extensionFields.entrySet()) {
+            if (first) {
+                first = false;
+            }
+            else {
+                sb.append( " " );
+            }
+
+
             sb.append( StringUtils.escapeExtensionKey( entry.getKey() ) );
             sb.append( "=" );
             sb.append( StringUtils.escapeExtensionValue( entry.getValue() ) );
-            sb.append( " " );
-        }
-
-
-        // Remove the last char since it's a space that is no longer needed
-        if (sb.length() > 0) {
-            sb.deleteCharAt( sb.length() - 1 );
         }
 
 
