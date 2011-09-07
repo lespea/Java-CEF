@@ -80,9 +80,18 @@ public class Extension implements Serializable {
      *             if one of the provided keys is invalid
      */
     Extension( final Map<String, String> extensionFields ) throws InvalidExtensionKey {
-        final StringBuilder sb    = new StringBuilder();
+
+        // Use the # of pairs * 20 as an initial best-guess for the builder size
+        final StringBuilder sb    = new StringBuilder( extensionFields.size() * 20 );
         Boolean             first = true;
 
+        /*
+         * Loop over all of the element pairs and add them to the string builder. Conveniently when
+         * we escape the keys/values we also check to make sure they're valid and if they aren't an
+         * exception will be thrown. So we not only ensure everything is okay at creation, but we
+         * also pre-calculate the string variable so future calls are instant for the small price of
+         * memory space.
+         */
         for (final Entry<String, String> entry : extensionFields.entrySet()) {
             if (first) {
                 first = false;
@@ -100,6 +109,7 @@ public class Extension implements Serializable {
 
         Extension.LOG.debug( "The map was valid and turned into an unmodifiable collection" );
 
+        // Should be changeable but cast it anyway
         fields = Collections.unmodifiableMap( extensionFields );
 
         Extension.LOG.debug( "The extension's string was calculated as {}", sb.toString() );
