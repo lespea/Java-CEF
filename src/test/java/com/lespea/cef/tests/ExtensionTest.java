@@ -47,6 +47,10 @@ import java.util.Map;
  * @author Adam Lesperance
  */
 public class ExtensionTest {
+
+    /**
+     * @return values that a normal extension should produce
+     */
     @DataProvider
     public Object[][] okayExtensions() {
         return new Object[][] {
@@ -58,6 +62,9 @@ public class ExtensionTest {
     }
 
 
+    /**
+     * @return values that a normal extension with multiple fields should produce
+     */
     @DataProvider
     public Object[][] okayMultiExtensions() {
         return new Object[][] {
@@ -72,6 +79,11 @@ public class ExtensionTest {
     /**
      * Verify that an invalid extension key throws an exception when escaped
      *
+     * @param keyStr
+     *            string that will be used to create the extension object
+     * @param wantedStr
+     *            how the extension object's string should appear
+     *
      * @throws InvalidExtensionKey
      *             if an invalid key is escaped
      */
@@ -85,7 +97,7 @@ public class ExtensionTest {
 
         extensionMap.put( parts[0] + " ", parts[1] );
 
-        final Extension extension = new Extension( extensionMap );
+        @SuppressWarnings("unused") final Extension extension = new Extension( extensionMap );
     }
 
 
@@ -111,8 +123,8 @@ public class ExtensionTest {
      */
     @Test
     public void testClonedFields() throws InvalidExtensionKey {
-        final Extension ext = new Extension( new HashMap<String, String>() );
-        final Map       t   = ext.getFields();
+        final Extension           ext = new Extension( new HashMap<String, String>() );
+        final Map<String, String> t   = ext.getFields();
 
         t.put( "test", "test" );
         Assert.assertEquals( "", ext.toString() );
