@@ -79,7 +79,7 @@ public class Extension implements Serializable {
      * @throws InvalidExtensionKey
      *             if one of the provided keys is invalid
      */
-    Extension( final Map<String, String> extensionFields ) throws InvalidExtensionKey {
+    public Extension( final Map<String, String> extensionFields ) throws InvalidExtensionKey {
 
         // Use the # of pairs * 20 as an initial best-guess for the builder size
         final StringBuilder sb    = new StringBuilder( extensionFields.size() * 20 );
