@@ -24,6 +24,7 @@ package com.lespea.cef.utils.tests;
 
 //~--- non-JDK imports --------------------------------------------------------
 
+import com.lespea.cef.InvalidExtensionKey;
 import com.lespea.cef.utils.StringUtils;
 
 import junit.framework.Assert;
@@ -135,9 +136,11 @@ public class ExtensionTest {
      *            the string to quote
      * @param quotedStr
      *            what the string should be transformed to by the function
+     * @throws InvalidExtensionKey
+     *             if the extension is invalid
      */
     @Test(dataProvider = "equalValues")
-    public void testKeyEquals( final String unquotedStr, final String quotedStr ) {
+    public void testKeyEquals( final String unquotedStr, final String quotedStr ) throws InvalidExtensionKey {
         Assert.assertEquals( quotedStr, StringUtils.escapeExtensionKey( unquotedStr ) );
     }
 

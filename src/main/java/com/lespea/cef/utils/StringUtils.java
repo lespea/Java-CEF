@@ -24,6 +24,7 @@ package com.lespea.cef.utils;
 
 //~--- non-JDK imports --------------------------------------------------------
 
+import com.lespea.cef.InvalidExtensionKey;
 import com.lespea.cef.InvalidField;
 
 import org.slf4j.Logger;
@@ -98,21 +99,30 @@ public final class StringUtils {
      * <p>
      * Null strings return null for now.
      *
-     * @param valueStr
+     * @param keyStr
      *            the text of the extension value that requires escaping
      * @return the escaped version of the extension value string
+     * @throws InvalidExtensionKey
+     *             if the key is invalid
      */
-    public static String escapeExtensionKey( final String valueStr ) {
-        if (valueStr == null) {
+    public static String escapeExtensionKey( final String keyStr ) throws InvalidExtensionKey {
+        if (keyStr == null) {
             StringUtils.LOG.warn( "Tried to escape a null CEF extension key" );
 
             return null;
         }
 
 
-        final String escapedStr = StringUtils.ESCAPE_EXTENSION_KEY_PATTERN.matcher( valueStr ).replaceAll( "\\\\=" );
+        if (StringUtils.INVALID_EXTENSION_KEY_PATTERN.matcher( keyStr ).find()) {
+            StringUtils.LOG.error( "The field string contained an invalid character" );
 
-        StringUtils.LOG.debug( "The CEF extension key \"{}\" was escaped to \"{}\"", valueStr, escapedStr );
+            throw new InvalidExtensionKey( "The field string " + keyStr + " contained an invalid character" );
+        }
+
+
+        final String escapedStr = StringUtils.ESCAPE_EXTENSION_KEY_PATTERN.matcher( keyStr ).replaceAll( "\\\\=" );
+
+        StringUtils.LOG.debug( "The CEF extension key \"{}\" was escaped to \"{}\"", keyStr, escapedStr );
 
         return escapedStr;
     }
