@@ -56,18 +56,18 @@ public class Extension implements Serializable {
      */
     private static final Logger LOG = LoggerFactory.getLogger( Extension.class );
 
-    /** Field description */
+    /** Serial version */
     private static final long serialVersionUID = 1L;
 
     //~--- fields -------------------------------------------------------------
 
-    /** Field description */
+    /** Holds the computed string output of the CEF Extension object */
     private final String asString;
 
-    /** Field description */
+    /** Holds the field mapping */
     private final Map<String, String> fields;
 
-    /** Field description */
+    /** Holds the computed hashCode for the CEF Extension object */
     private final int hashCode;
 
 
