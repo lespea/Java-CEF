@@ -74,7 +74,13 @@ public final class StringUtils {
      * Pattern used to escape any of the characters that require escaping in the extension value
      * part of a CEF string
      */
-    private static final Pattern ESCAPE_EXTENSION_VALUE_PATTERN = Pattern.compile( "[\\\\\r\n]" );
+    private static final Pattern ESCAPE_EXTENSION_VALUE_PATTERN = Pattern.compile( "[=\r\n]" );
+
+    /**
+     * Pattern used to escape any of the characters that require escaping in the extension value
+     * part of a CEF string
+     */
+    private static final Pattern ESCAPE_EXTENSION_KEY_PATTERN = Pattern.compile( "=" );
 
 
     //~--- constructors -------------------------------------------------------
@@ -88,9 +94,33 @@ public final class StringUtils {
     //~--- methods ------------------------------------------------------------
 
     /**
-     * Every field in a CEF string (minus the extension) must escape the backslash
-     * <code>("\")</code> character and translate any newline (<code>"\r" OR "\n"</code>) characters
-     * into their respective string representative.
+     * Every key in a CEF extension map must escape the ='s character
+     * <p>
+     * Null strings return null for now.
+     *
+     * @param valueStr
+     *            the text of the extension value that requires escaping
+     * @return the escaped version of the extension value string
+     */
+    public static String escapeExtensionKey( final String valueStr ) {
+        if (valueStr == null) {
+            StringUtils.LOG.warn( "Tried to escape a null CEF extension key" );
+
+            return null;
+        }
+
+
+        final String escapedStr = StringUtils.ESCAPE_EXTENSION_KEY_PATTERN.matcher( valueStr ).replaceAll( "\\\\=" );
+
+        StringUtils.LOG.debug( "The CEF extension key \"{}\" was escaped to \"{}\"", valueStr, escapedStr );
+
+        return escapedStr;
+    }
+
+
+    /**
+     * Every value in a CEF extension map must escape the = character and all newline characters (\r
+     * and \n) should be turned into their string equivalent.
      * <p>
      * Null strings return null for now.
      *
@@ -139,7 +169,7 @@ public final class StringUtils {
 
         final String escapedStr = escapedStrBuf.toString();
 
-        StringUtils.LOG.debug( "The CEF field \"{}\" was escaped to \"{}\"", valueStr, escapedStr );
+        StringUtils.LOG.debug( "The CEF extension value \"{}\" was escaped to \"{}\"", valueStr, escapedStr );
 
         return escapedStr;
     }
@@ -213,7 +243,7 @@ public final class StringUtils {
         }
 
 
-        StringUtils.LOG.debug( "The extension key string \"{}\" is {}valid", extensionKeyStr, isValid
+        StringUtils.LOG.debug( "The extension key \"{}\" is {}valid", extensionKeyStr, isValid
                 ? ""
                 : "not " );
 
@@ -238,7 +268,7 @@ public final class StringUtils {
         }
 
 
-        StringUtils.LOG.debug( "The extension key string \"{}\" is valid", extensionValueStr );
+        StringUtils.LOG.debug( "The extension value \"{}\" is valid", extensionValueStr );
 
         return true;
     }
@@ -269,7 +299,7 @@ public final class StringUtils {
         }
 
 
-        StringUtils.LOG.debug( "The field string \"{}\" is {}valid", fieldStr, isValid
+        StringUtils.LOG.debug( "The field \"{}\" is {}valid", fieldStr, isValid
                 ? ""
                 : "not " );
 

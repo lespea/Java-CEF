@@ -68,13 +68,24 @@ public class ExtensionTest {
 
 
     /**
+     * List of strings that contain backslashes and how they should look after being escaped.
+     *
+     * @return the grouping of strings to process
+     */
+    @DataProvider
+    public Object[][] equalValues() {
+        return TestHelpers.genEscapeStrings( "=", "\\=" );
+    }
+
+
+    /**
      * List of strings that contain carriage returns and how they should look after being escaped.
      *
      * @return the grouping of strings to process
      */
     @DataProvider
     public Object[][] mixedValues() {
-        return TestHelpers.genEscapeStrings( "\r\n\n\\\\\r", "\\r\\n\\n\\\\\\\\\\r" );
+        return TestHelpers.genEscapeStrings( "\r\n\n\r=\\", "\\r\\n\\n\\r\\=\\" );
     }
 
 
@@ -104,17 +115,6 @@ public class ExtensionTest {
 
 
     /**
-     * List of strings that contain backslashes and how they should look after being escaped.
-     *
-     * @return the grouping of strings to process
-     */
-    @DataProvider
-    public Object[][] slashValues() {
-        return TestHelpers.genEscapeStrings( "\\", "\\\\" );
-    }
-
-
-    /**
      * Verify that an invalid extension key is marked as such
      *
      * @param badKey
@@ -125,6 +125,20 @@ public class ExtensionTest {
     @Test(dataProvider = "badKeyStrings")
     public void testInvalidExtensionKey( final String badKey, final String ignoreString ) {
         Assert.assertFalse( StringUtils.isValidExtensionKey( badKey ) );
+    }
+
+
+    /**
+     * Makes sure the equals character is properly escaped in an extension key.
+     *
+     * @param unquotedStr
+     *            the string to quote
+     * @param quotedStr
+     *            what the string should be transformed to by the function
+     */
+    @Test(dataProvider = "equalValues")
+    public void testKeyEquals( final String unquotedStr, final String quotedStr ) {
+        Assert.assertEquals( quotedStr, StringUtils.escapeExtensionKey( unquotedStr ) );
     }
 
 
@@ -211,6 +225,20 @@ public class ExtensionTest {
 
 
     /**
+     * Makes sure the equals character is properly escaped in an extension value.
+     *
+     * @param unquotedStr
+     *            the string to quote
+     * @param quotedStr
+     *            what the string should be transformed to by the function
+     */
+    @Test(dataProvider = "equalValues")
+    public void testValueEquals( final String unquotedStr, final String quotedStr ) {
+        Assert.assertEquals( quotedStr, StringUtils.escapeExtensionValue( unquotedStr ) );
+    }
+
+
+    /**
      * Makes sure that mixed characters are properly escaped in an extension value.
      *
      * @param unquotedStr
@@ -234,20 +262,6 @@ public class ExtensionTest {
      */
     @Test(dataProvider = "newlineValues")
     public void testValueNewlines( final String unquotedStr, final String quotedStr ) {
-        Assert.assertEquals( quotedStr, StringUtils.escapeExtensionValue( unquotedStr ) );
-    }
-
-
-    /**
-     * Makes sure the backslash character is properly escaped in an extension value.
-     *
-     * @param unquotedStr
-     *            the string to quote
-     * @param quotedStr
-     *            what the string should be transformed to by the function
-     */
-    @Test(dataProvider = "slashValues")
-    public void testValueSlashes( final String unquotedStr, final String quotedStr ) {
         Assert.assertEquals( quotedStr, StringUtils.escapeExtensionValue( unquotedStr ) );
     }
 
