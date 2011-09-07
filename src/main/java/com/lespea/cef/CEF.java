@@ -65,7 +65,7 @@ public class CEF implements Serializable {
      */
     public static final int MIN_SEVERITY = 0;
 
-    /** Field description */
+    /** Serial version */
     private static final long serialVersionUID = 1L;
 
     //~--- fields -------------------------------------------------------------
@@ -294,28 +294,28 @@ public class CEF implements Serializable {
 
         final CEF other = (CEF) obj;
 
-        if (cefVersion != other.cefVersion) {
+        if (cefVersion != other.getCefVersion()) {
             return false;
         }
-        else if (!id.equals( other.id )) {
+        else if (!id.equals( other.getId() )) {
             return false;
         }
-        else if (!name.equals( other.name )) {
+        else if (!name.equals( other.getName() )) {
             return false;
         }
-        else if (!product.equals( other.product )) {
+        else if (!product.equals( other.getProduct() )) {
             return false;
         }
-        else if (severity != other.severity) {
+        else if (severity != other.getSeverity()) {
             return false;
         }
-        else if (!vendor.equals( other.vendor )) {
+        else if (!vendor.equals( other.getVendor() )) {
             return false;
         }
-        else if (!version.equals( other.version )) {
+        else if (!version.equals( other.getVersion() )) {
             return false;
         }
-        else if (!extension.equals( other.extension )) {
+        else if (!extension.equals( other.getExtension() )) {
             return false;
         }
 
