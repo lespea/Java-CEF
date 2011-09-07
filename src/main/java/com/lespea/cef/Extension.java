@@ -110,8 +110,6 @@ public class Extension implements Serializable {
         }
 
 
-        Extension.LOG.debug( "The map was valid and turned into an unmodifiable collection" );
-
         // Should be changeable but cast it anyway
         fields = Collections.unmodifiableMap( extensionFields );
 
