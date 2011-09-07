@@ -67,6 +67,9 @@ public class Extension implements Serializable {
     /** Field description */
     private final Map<String, String> fields;
 
+    /** Field description */
+    private final int hashCode;
+
 
     //~--- constructors -------------------------------------------------------
 
@@ -115,6 +118,7 @@ public class Extension implements Serializable {
         Extension.LOG.debug( "The extension's string was calculated as {}", sb.toString() );
 
         asString = sb.toString();
+        hashCode = fields.hashCode();
     }
 
 
@@ -131,6 +135,9 @@ public class Extension implements Serializable {
         else if (this.getClass() != obj.getClass()) {
             return false;
         }
+        else if (hashCode != obj.hashCode()) {
+            return false;
+        }
         else if (!fields.equals( ((Extension) obj).getFields() )) {
             return false;
         }
@@ -142,7 +149,7 @@ public class Extension implements Serializable {
 
     @Override
     public int hashCode() {
-        return fields.hashCode();
+        return hashCode;
     }
 
 
