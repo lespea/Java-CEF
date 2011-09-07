@@ -116,6 +116,25 @@ public class ExtensionTest {
 
 
     /**
+     * Verify that an invalid extension key throws an exception when escaped
+     *
+     * @param badKey
+     *            string that should be an invalid extension key
+     * @param ignoreString
+     *            *not used
+     * @throws InvalidExtensionKey
+     *             if an invalid key is escaped
+     */
+    @Test(
+        dataProvider       = "badKeyStrings",
+        expectedExceptions = InvalidExtensionKey.class
+    )
+    public void testBadExtensionKey( final String badKey, final String ignoreString ) throws InvalidExtensionKey {
+        StringUtils.escapeExtensionKey( badKey );
+    }
+
+
+    /**
      * Verify that an invalid extension key is marked as such
      *
      * @param badKey
@@ -141,7 +160,8 @@ public class ExtensionTest {
      */
     @Test(dataProvider = "equalValues")
     public void testKeyEquals( final String unquotedStr, final String quotedStr ) throws InvalidExtensionKey {
-        Assert.assertEquals( quotedStr, StringUtils.escapeExtensionKey( unquotedStr ) );
+        Assert.assertEquals( quotedStr.replaceAll( "\\s", "_" ),
+                             StringUtils.escapeExtensionKey( unquotedStr.replaceAll( "\\s", "_" ) ) );
     }
 
 
